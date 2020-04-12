@@ -45,14 +45,15 @@ and their meaning:
 
     * `id`
     * `name`
-    * `serviceUrl`
+    * `serviceUrl` or `getBet`
     * `version`
     * `state`
     * `chips`
     * `chipsBet`
     * `cards`
 
-  Read [player state fields](./player-state-fields.md) doc to learn more about these
+  Read the [API](./api.md) for more info on player objects and the
+  [player state fields](./player-state-fields.md) doc to learn more about these
   properties.
 
 
