@@ -23,8 +23,9 @@ Task.run =
         playerName: winner.name,
       });
 
-    const points = tournament.settings.POINTS
-      .find((schema) => schema.length === gamestate.players.length);
+    const points = (tournament.settings.POINTS ?
+      tournament.settings.POINTS.find((schema) => schema.length === gamestate.players.length) :
+      new Array(gamestate.players.length).fill(0));
 
     const finalRank = gamestate.gameRank
       .map((entry, i) => {
