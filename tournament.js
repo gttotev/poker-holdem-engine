@@ -145,6 +145,12 @@ class Tournament {
       this.state = States.get("latest-game");
     }
   }
+
+  kill () {
+    LOGGER.info(`Tournament ${this.id} stopping NOW!`, { tag: this.id });
+
+    this.state = States.get("completed");
+  }
 }
 
 module.exports = Tournament;

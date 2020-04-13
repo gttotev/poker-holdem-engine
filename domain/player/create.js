@@ -260,7 +260,8 @@ module.exports =
         payload.me = gamestate.players.findIndex((player) => player.id === this.id);
 
         if (!this.serviceUrl) {
-          return Promise.resolve(this.getBet(payload));
+          return Promise.resolve(this.getBet(payload))
+            .then(bet => Math.min(this.chips, sanitizeAmount(bet)));
         }
 
         return new Promise((resolve) => {
