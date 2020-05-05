@@ -40,6 +40,8 @@ class Tournament {
     this.onGameComplete = opts.onGameComplete;
     this.onTournamentComplete = opts.onTournamentComplete;
 
+    this.waitingRoom = [];
+
     const gamestate = {};
 
     gamestate.gameProgressiveId = opts.recoveryId || 1;
@@ -75,8 +77,7 @@ class Tournament {
       },
       dealerPosition: {
         get () {
-          return this.players
-            .findIndex((player) => player.Dealer);
+          return Math.max(0, this.players.findIndex((player) => player.Dealer));
         },
       },
       bigBlindPosition: {
@@ -150,6 +151,14 @@ class Tournament {
     LOGGER.info(`Tournament ${this.id} stopping NOW!`, { tag: this.id });
 
     this.state = States.get("completed");
+  }
+
+  join (playerData) {
+    this.waitingRoom.push({ active: true, data: playerData });
+  }
+
+  leave (id) {
+    this.waitingRoom.push({ active: false, data: id });
   }
 }
 

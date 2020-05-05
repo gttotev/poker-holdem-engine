@@ -69,6 +69,7 @@ const showdown = [
 ];
 
 const warmup = require("./tasks/warmup-wait");
+const syncPlayers = require("./tasks/sync-players");
 const onGameCompleted = require("./tasks/on-game-completed");
 const waitOnPause = require("./tasks/wait-restart");
 const waitBeforeHand = require("./tasks/throttle");
@@ -78,6 +79,8 @@ const announceTournamentEnd = require("./tasks/announce-end");
 
 const Tasks = [
   warmup,
+
+  syncPlayers,
 
   // Before a new hand starts,
   // the engine checks the active players.
