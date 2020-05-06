@@ -40,7 +40,14 @@ class Tournament {
     this.onGameComplete = opts.onGameComplete;
     this.onTournamentComplete = opts.onTournamentComplete;
 
-    this.waitingRoom = [];
+    this.waitingRoom = {
+      joiners: [],
+      leavers: new Set(),
+      clear: function() {
+        this.joiners = [];
+        this.leavers.clear();
+      }
+    };
 
     const gamestate = {};
 
@@ -154,11 +161,15 @@ class Tournament {
   }
 
   join (playerData) {
-    this.waitingRoom.push({ active: true, data: playerData });
+    if (this.waitingRoom.leavers.has(playerData.id)) {
+      this.waitingRoom.leavers.delete(playerData.id);
+    } else {
+      this.waitingRoom.joiners.push(playerData);
+    }
   }
 
   leave (id) {
-    this.waitingRoom.push({ active: false, data: id });
+    this.waitingRoom.leavers.add(id);
   }
 }
 

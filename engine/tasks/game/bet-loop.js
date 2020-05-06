@@ -31,6 +31,7 @@ const collectBets =
           }
 
           const bet = await player.talk(gamestate);
+          if (bet < 0) return player.fold(gamestate);
 
           // That is, how much the player should bet
           // to remain active in this session.

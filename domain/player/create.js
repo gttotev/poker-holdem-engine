@@ -371,7 +371,5 @@ const sanitizeAmount =
       amount = Number(amount);
     }
 
-    return amount > 0
-      ? amount
-      : 0;
+    return amount;
   };
