@@ -323,7 +323,7 @@ module.exports =
       player.cards = [];
 
       // Set the initial amount of available chips.
-      player.chips = tournamentSettings.BUYIN;
+      player.chips = playerData.initialChips || tournamentSettings.BUYIN;
 
       // Total amount of chips the player bet
       // in the current hand.
