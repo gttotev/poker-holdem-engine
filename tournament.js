@@ -41,11 +41,11 @@ class Tournament {
     this.onTournamentComplete = opts.onTournamentComplete;
 
     this.waitingRoom = {
-      joiners: [],
-      leavers: new Set(),
+      joiners: new Map(),
+      order: [],
       clear: function() {
-        this.joiners = [];
-        this.leavers.clear();
+        this.joiners.clear();
+        this.order = [];
       }
     };
 
@@ -160,16 +160,9 @@ class Tournament {
     this.state = States.get("completed");
   }
 
-  join (playerData) {
-    if (this.waitingRoom.leavers.has(playerData.id)) {
-      this.waitingRoom.leavers.delete(playerData.id);
-    } else {
-      this.waitingRoom.joiners.push(playerData);
-    }
-  }
-
-  leave (id) {
-    this.waitingRoom.leavers.add(id);
+  reseat(order, pd) {
+    if (pd) this.waitingRoom.joiners.set(pd.id, pd);
+    this.waitingRoom.order = order;
   }
 }
 

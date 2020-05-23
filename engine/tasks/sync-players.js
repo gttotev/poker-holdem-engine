@@ -8,17 +8,19 @@ const Task = Object.create(task);
 Task.name = "Sync players in waiting room";
 
 Task.shouldRun =
-  ({ waitingRoom: { joiners, leavers } }) =>
-    joiners.length + leavers.size > 0;
+  ({ waitingRoom: { order } }) =>
+    order.length > 0;
 
 Task.run =
   async (LOGGER, tournament) => {
     const players = tournament.gamestate.players;
-    const { joiners, leavers } = tournament.waitingRoom;
+    const { order, joiners } = tournament.waitingRoom;
     const create = getPlayerFactory(LOGGER,
       tournament.onFeed.bind(tournament), tournament.settings);
-    tournament.gamestate.players = players.concat(joiners.map(create))
-      .filter(p => p && !leavers.has(p.id));
+    const currentPlayers = new Map();
+    players.forEach(p => currentPlayers.set(p.id, p));
+    tournament.gamestate.players = order.filter(Boolean).map(id =>
+      currentPlayers.get(id) || create(joiners.get(id)));
     tournament.waitingRoom.clear();
   };
 
